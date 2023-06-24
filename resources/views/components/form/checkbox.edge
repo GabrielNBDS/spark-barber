@@ -1,0 +1,25 @@
+@set('value', value || '1')
+@set('side', side || 'left')
+
+<div class="form-control max-w-max">
+  <label  for="{{ name }}" class="label cursor-pointer">
+    @if(side == 'left')
+      <span class="label-text">{{ label }}</span>
+    @endif
+    <input
+      type="checkbox"
+      class="{{ clsx('checkbox mx-4', className) }}"
+      id="{{ name }}"
+      name="{{ name }}"
+      value="{{ value }}"
+      {{ flashMessages.get(name) === value ? "checked" : "" }}
+    />
+    @if(side == 'right')
+      <span class="label-text">{{ label }}</span>
+    @endif
+  </label>
+
+  @if(!hideError)
+    @!form.error({ field: name })
+  @end
+</div>

@@ -1,0 +1,18 @@
+@set('value', value || flashMessages.get(name) || '')
+
+<div class="form-control w-full">
+  @if(label)
+    @!form.label({ label, name})
+  @end
+
+  <input
+    id="{{ name }}"
+    value="{{ value }}"
+    class="{{ clsx('input input-bordered', className) }}"
+    {{ $props.serializeExcept(['label', 'className', 'component', 'size', 'rounded', 'color', 'variant', 'fatBorder']) }}
+  />
+
+  @if(!hideError && flashMessages.has(`errors.${name}`))
+    @!form.error({ field: name })
+  @end
+</div>

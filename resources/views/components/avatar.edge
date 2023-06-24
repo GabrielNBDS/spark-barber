@@ -1,0 +1,21 @@
+@set('width', 'w-20 text-2xl')
+
+@if(size === 'sm')
+  @set('width', 'w-10')
+@elseif(size === 'lg')
+  @set('width', 'w-32 text-3xl')
+@end
+
+@if(url)
+  <div class="avatar">
+    <div class="rounded-full {{ width }}">
+      <img src="{{ url }}" />
+    </div>
+  </div>
+@else
+  <div class="avatar placeholder">
+    <div class="bg-base-content/10 text-base-content rounded-full {{ width }}">
+      <span>{{ name.split(' ').slice(0,2).map(item => item[0]).join('') }}</span>
+    </div>
+  </div>
+@end

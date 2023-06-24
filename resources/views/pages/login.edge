@@ -1,0 +1,29 @@
+@layout('layouts/main')
+@set('title', 'Login')
+
+@section('body')
+  <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-bold sm:text-3xl text-center">Bem-vindo!</h1>
+
+    @component('components/form', {
+      action: route('login.post'),
+      className: 'max-w-lg'
+    })
+      @!form.input({ label: 'E-mail', name: 'email' })
+
+      @!form.input({ label: 'Senha', name: 'password', type: 'password' })
+
+      @!form.checkbox({ label: 'Lembrar-se', name: 'rememberMe', className: 'checkbox-primary' })
+
+      @if(flashMessages.has('auth.errors'))
+        @!alert({ title: 'Credenciais inválidas' })
+      @end
+
+      <div class="flex items-center justify-between">
+        <a class="underline text-sm text-gray-5" href="">Esqueci a senha</a>
+
+        <button type="submit" class="btn btn-primary">Entrar</button>
+      </div>
+    @endcomponent
+  </div>
+@end

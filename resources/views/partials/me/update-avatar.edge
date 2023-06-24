@@ -1,0 +1,45 @@
+<div avatar-form>
+  <div class="flex items-center gap-4">
+    @!avatar({ size: 'lg', name: auth.user.name, url: auth.user.avatar?.url })
+
+    <div class="flex flex-col gap-2">
+      <form
+        method="POST"
+        enctype="multipart/form-data"
+        action="{{ route('me.update-avatar')}}"
+        up-autosubmit
+        up-target="[avatar-form], [layout-sidebar]"
+        up-fail-target="[avatar-form]"
+      >
+        {{ csrfField() }}
+        <label class="btn btn-primary" for="avatar">
+          Trocar foto
+        </label>
+
+        <input
+          type="file"
+          name="avatar"
+          id="avatar"
+          hidden
+        >
+      </form>
+
+      @if(auth.user.avatar)
+        <form
+          method="POST"
+          action="{{ route('me.remove-avatar') }}"
+          up-target="[layout-main], [layout-sidebar]"
+        >
+          {{ csrfField() }}
+
+          <button type="submit" class="btn btn-error w-full">
+            Remover
+          </button>
+        </form>
+      @endif
+    </div>
+
+  </div>
+
+  @!form.error({ field: 'avatar' })
+</div>

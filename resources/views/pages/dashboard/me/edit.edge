@@ -1,0 +1,39 @@
+@layout('layouts/dashboard')
+@set('title', 'Editar Seu Perfil')
+
+@section('body')
+  <main class="w-full {{ up.isInModal() ? 'px-4' : 'px-4 py-8' }}">
+    @if(!up.isInModal())
+      <h1 class="mb-8 text-xl font-bold text-gray-8 md:text-2xl">Editar perfil</h1>
+    @endif
+
+    @include('partials/me/update-avatar')
+
+    @component('components/form', {
+      action: route('me.update'),
+    })
+      @!form.input({
+        label: 'Nome',
+        name: 'name',
+        value: flashMessages.get('name') || auth.user.name
+      })
+
+      @!form.input({
+        label: 'E-mail',
+        name: 'email',
+        type: 'email',
+        value: flashMessages.get('email') || auth.user.email
+      })
+
+      <div class="flex justify-between">
+        @if(!up.isInModal())
+          <a href="{{ route('me') }}" class="btn btn-link text-neutral">Voltar</a>
+        @endif
+
+        <button type="submit" class="btn btn-primary {{ up.isInModal() ? 'btn-block' : '' }}">
+          Salvar
+        </button>
+      </div>
+    @endcomponent
+  </main>
+@end

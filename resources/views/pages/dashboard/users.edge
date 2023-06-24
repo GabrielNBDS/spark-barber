@@ -1,0 +1,45 @@
+@layout('layouts/dashboard')
+@set('title', 'Users')
+
+@section('body')
+  <main class="w-full py-8">
+    <div class="px-4 flex justify-between">
+      <h1 class="text-2xl mb-4 font-bold text-gray-7">Usuários</h1>
+
+      <a
+        class="btn btn-primary"
+        href="{{ route('users.create') }}"
+        up-layer="new"
+        up-accept-location="{{ route('users.index') }}"
+        up-on-accepted="up.reload('[layout-main]')"
+      >
+        Novo usuário
+      </a>
+    </div>
+
+    @component('components/table/wrapper',
+      {
+        head: ['Usuário', 'Papel', 'E-mail'],
+        model: users,
+        className: 'mt-4',
+      }
+    )
+      @each(user in users)
+        <tr class="hover">
+          <td>
+            <div class="flex gap-4 items-center">
+              @!avatar({ size: 'sm', name: user.name, url: user.avatar?.url })
+
+              <p>{{ user.name }}</p>
+            </div>
+          </td>
+          <td>{{ user.role.name }}</td>
+          <td>{{ user.email }}</td>
+          <th>
+            <a href="{{ route('users.read', [user.slug]) }}" class="text-right btn btn-ghost btn-xs">Detalhes</a>
+          </th>
+        </tr>
+      @end
+    @end
+  </main>
+@end

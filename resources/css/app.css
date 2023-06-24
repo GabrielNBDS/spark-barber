@@ -1,0 +1,22 @@
+@import "./tailwind.css";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.btn {
+  @apply active:!translate-y-[2px]
+}
+
+up-modal-box {
+  @apply mt-auto md:mt-0 rounded-b-none md:rounded-b-lg rounded-lg !shadow-sm !w-screen md:!max-w-2xl !bg-base-100
+}
+
+up-modal-viewport {
+  @apply !p-0 md:!px-4 md:!py-6
+}
+
+.sidebarLink {
+  @apply flex items-center gap-2 rounded-[--rounded-btn] px-4 py-2.5 text-base-content bg-transparent hover:bg-base-200;
+}
+
+.sidebarLink.active {
+  @apply bg-base-200;
+}

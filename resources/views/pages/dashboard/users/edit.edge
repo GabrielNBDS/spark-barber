@@ -1,0 +1,37 @@
+@layout('layouts/dashboard')
+@set('title', `Editar ${user.name}`)
+@set('rolesSelectValues', await getRolesSelectValues())
+
+@section('body')
+  <main class="w-full px-4 py-8">
+    <h1 class="mb-8 text-xl font-bold text-gray-8 md:text-2xl">Editar "{{ user.name }}"</h1>
+    @component('components/form', {
+      action: route('users.update', { id: user.id })
+    })
+      @!form.input({
+        label: 'Nome',
+        name: 'name',
+        value: flashMessages.get('name') || user.name
+      })
+
+      @!form.input({
+        label: 'E-mail',
+        name: 'email',
+        type: 'email',
+        value: flashMessages.get('email') || user.email
+      })
+
+      @!form.select({ label: 'Papel', name: 'roleId', items: rolesSelectValues, selected: user.roleId })
+
+      <div class="flex justify-between">
+        @if(!up.isInModal())
+          <a href="{{ route('users.read', [user.slug]) }}" class="btn btn-link text-neutral">Voltar</a>
+        @endif
+
+        <button type="submit" class="btn btn-primary {{ up.isInModal() ? 'btn-block' : '' }}">
+          Salvar
+        </button>
+      </div>
+    @endcomponent
+  </main>
+@end

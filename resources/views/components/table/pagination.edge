@@ -1,0 +1,60 @@
+@set('paginationRange', getPaginationRange(model.lastPage, model.currentPage))
+
+@if(model.hasPages)
+  <ol class="flex mt-4 space-x-1 text-sm font-medium px-4">
+    @if((model.currentPage - 1) >= 1)
+      <li>
+        <a data-page="{{ model.currentPage - 1 }}" class="inline-flex items-center justify-center w-8 h-8 border border-base-300 rounded-[--rounded-btn] bg-base-100 cursor-pointer">
+          @svg('lucide:chevron-left', { class: 'w-4 h-4 text-base-content'})
+        </a>
+      </li>
+    @else
+      <li>
+        <p class="inline-flex items-center justify-center w-8 h-8 border border-base-300 rounded-[--rounded-btn] bg-base-100 cursor-not-allowed">
+          @svg('lucide:chevron-left', { class: 'w-4 h-4 text-base-content'})
+        </p>
+      </li>
+    @end
+
+    @each(page in paginationRange)
+      @if(typeof page === 'number')
+        @if(model.currentPage === page)
+          <li class="block w-8 h-8 leading-8 text-center bg-primary border-primary text-primary-content rounded-[--rounded-btn]">{{ page }}</li>
+        @else
+          <li>
+            <a data-page="{{ page }}" class="block w-8 h-8 leading-8 text-center border border-base-300 text-base-content rounded-[--rounded-btn] cursor-pointer">{{ page }}</a>
+          </li>
+        @end
+      @else
+        <li class="inline-flex items-center justify-center w-8 h-8 border border-base-300 rounded-[--rounded-btn]">
+          @svg('lucide:more-horizontal', { class: 'w-4 h-4 text-base-content'})
+        </li>
+      @end
+    @end
+
+    @if(model.hasMorePages)
+      <li>
+        <a data-page="{{ model.currentPage + 1 }}" class="inline-flex items-center justify-center w-8 h-8 border border-base-300 rounded-[--rounded-btn] bg-base-100 cursor-pointer">
+          @svg('lucide:chevron-right', { class: 'w-4 h-4 text-base-content'})
+        </a>
+      </li>
+    @else
+      <li>
+        <p class="inline-flex items-center justify-center w-8 h-8 border border-base-300 rounded-[--rounded-btn] bg-base-100 cursor-not-allowed">
+          @svg('lucide:chevron-right', { class: 'w-4 h-4 text-base-content'})
+        </p>
+      </li>
+    @end
+  </ol>
+
+  <script>
+    var pages = document.querySelectorAll('[data-page]')
+
+    pages.forEach((page) => {
+      page.href =
+        window.location.pathname +
+        `?page=${page.dataset.page}` +
+        window.location.search.slice(1).replace(/page=[0-9]/, '')
+    })
+  </script>
+@end

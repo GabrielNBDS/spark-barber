@@ -1,0 +1,39 @@
+@layout('layouts/dashboard')
+@set('title', 'Criar usuário')
+@set('rolesSelectValues', await getRolesSelectValues())
+
+@section('body')
+  <main class="w-full {{ up.isInModal() ? 'px-4' : 'px-4 py-8' }}">
+    <h1 class="text-xl font-bold text-base-content md:text-2xl">Novo usuário</h1>
+    <p class="mb-4 text-base-content/60">A senha será "123456" e será pedido para trocar no primeiro login.</p>
+
+    @component('components/form', {
+      action: route('users.store'),
+    })
+      @!form.input({
+        label: 'Nome',
+        name: 'name',
+        value: flashMessages.get('name')
+      })
+
+      @!form.input({
+        label: 'E-mail',
+        name: 'email',
+        type: 'email',
+        value: flashMessages.get('email')
+      })
+
+      @!form.select({ label: 'Papel', name: 'roleId', items: rolesSelectValues, selected: flashMessages.get('roleId') ?? Roles.USER })
+
+      <div class="flex justify-between">
+        @if(!up.isInModal())
+          <a href="{{ route('users.index') }}" class="btn btn-link text-neutral">Voltar</a>
+        @endif
+
+        <button type="submit" class="btn btn-primary {{ up.isInModal() ? 'btn-block' : '' }}">
+          Salvar
+        </button>
+      </div>
+    @endcomponent
+  </main>
+@end

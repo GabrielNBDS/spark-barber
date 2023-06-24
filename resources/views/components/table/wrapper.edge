@@ -1,0 +1,22 @@
+<div class="{{ clsx('overflow-x-auto py-2', className) }}">
+  <table class="table">
+    <thead>
+      <tr>
+        @each(item in head)
+          <th
+            class="th"
+          >
+            {{ item }}
+          </th>
+        @endeach
+      </tr>
+    </thead>
+
+    <tbody>
+      {{{ await $slots.main() }}}
+    </tbody>
+  </table>
+
+  @!table.pagination({ model: model })
+</div>
+
